@@ -16,8 +16,18 @@ System Programming Guide. Section 13.14, Enhanced Intel SpeedStep technology.
 Table B-2, MSRs in Pentium M Processors.
   http://www.intel.com/design/pentium4/manuals/253668.htm
 
-see also http://www.linux-phc.org/ for more information on how-to use and
+see also: http://www.linux-phc.org/ for more information on how-to use and
 how-not-to use the VID values.
+
+N.B.: a previous undervolting patch written by Juraj Hercek for NetBSD already
+exists. My bad for not checking the mailing-list before working on it. More
+information can be found here:
+	http://mail-index.netbsd.org/tech-kern/2007/04/14/0003.html
+
+I have not test this previous patch, but if it still works, chances are that
+you should prefer it, given that I am a complete (Net)BSD newby and that my
+present version has received no piece of advice from confirmed NetBSD
+developers (not yet?).
 
 Disclaimer:
 ===========
