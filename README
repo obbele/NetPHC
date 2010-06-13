@@ -1,0 +1,67 @@
+Presentation:
+=============
+
+Following what exist for the Linux kernel, this patch allows to set custom
+voltages for Intel® Pentium M processors or derivatives, resulting in longer
+battery life, cooler system and, last but not the least, less noisy fan.
+
+Note that this patch was not designed for over-clocking. In fact, you can
+not change available frequencies with it. You can only decrease the VIDs
+(voltage ID).
+
+The VID values are not converted to mV in order to be consistent with the
+linux-phc patch behavior. See the reference Intel® documentation for more
+information : "IA-32 Intel Architecture Software Developer's Manual", Volume 3,
+System Programming Guide. Section 13.14, Enhanced Intel SpeedStep technology.
+Table B-2, MSRs in Pentium M Processors.
+  http://www.intel.com/design/pentium4/manuals/253668.htm
+
+see also http://www.linux-phc.org/ for more information on how-to use and
+how-not-to use the VID values.
+
+Disclaimer:
+===========
+
+This patch is provided without ANY WARRANTIES. Use at your own risks.
+
+Setting non-default non-constructor-approved values, may lead to unknown
+behaviour and may damage your hardware.
+
+Setting too low VID values may result in incorrect processor computation,
+system instability or hang-ups.
+
+How-to patch:
+=============
+
+Apply the est.diff patch to the original usr/src/sys/arch/x86/x86/est.c C
+source file.
+
+How-to use:
+===========
+
+You can set the VID list of values by setting a different string value for the
+sysctl node "machdep.est.phc.vids". VID values should be separated by any
+non-digit characters (space, colon, comma, ...).
+
+The sysctl machdep.est.phc.fids and machdep.est.phc.vids_original nodes are
+given for reference with the linux-phc values.
+
+shell$> sysctl machdep.est.phc
+
+	machdep.est.phc.fids = 12 11 10 9 8 7 6
+	machdep.est.phc.vids_original = 41 38 34 30 26 22 19
+	machdep.est.phc.vids = 41 38 34 30 26 22 19
+
+shell$> sysctl -w machdep.est.phc.vids=18:15:11:9:6:4:2
+shell$> sysctl machdep.est.phc
+
+	machdep.est.phc.fids = 12 11 10 9 8 7 6
+	machdep.est.phc.vids_original = 41 38 34 30 26 22 19
+	machdep.est.phc.vids = 18 15 11 9 6 4 2
+
+NetBSD supported versions:
+==========================
+
+Currently tested again the 5.0.2 NetBSD sources.
+
+; vim:spell:
